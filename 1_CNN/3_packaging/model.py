@@ -12,6 +12,7 @@ class TextCNN(nn.Module):
         self.args = args
         
         self.static_embedding = nn.Embedding(vocab_size, args.embedding_dim, padding_idx= pad_idx)
+        nn.init.uniform_(self.static_embedding.weight, -0.25, 0.25)
         self.nonstatic_embedding = nn.Embedding(vocab_size, args.embedding_dim, padding_idx= pad_idx) #For multichannel
         
         self.convs = nn.ModuleList([

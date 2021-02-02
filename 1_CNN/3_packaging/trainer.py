@@ -39,10 +39,6 @@ class Trainer:
         
         # For K-fold
         train_size = int(len(dataset) / args.cv_num)    
-        
-        print("Dataset size:", len(dataset))
-        print("train size:", train_size)
-        
             # Randomly split a dataset into non-overlapping new datasets of given lengths
         self.dataset_list = random_split(dataset,          
                                          [train_size for i in range(args.cv_num -1)] +\
@@ -71,6 +67,7 @@ class Trainer:
                 model.static_embedding.weight.data.copy_(self.embeddings)
                 model.static_embedding.weight.requires_grad = False
             elif self.args.mode == "non-static":
+                model.static_embedding.data.normal_(0, 1)
                 model.static_embedding.weight.data.copy_(self.embeddings)
             elif self.args.mode == "multichannel":
                 model.static_embedding.weight.data.copy_(self.embeddings)
